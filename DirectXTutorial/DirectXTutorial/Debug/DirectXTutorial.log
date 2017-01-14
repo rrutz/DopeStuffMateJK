@@ -1,0 +1,3 @@
+﻿  MainWin.cpp
+c:\users\ruedi\documents\visual studio 2015\projects\c++ learning\directxtutorial\directxtutorial\mainwin.cpp(79): warning C4007: 'WinMain': must be '__stdcall'
+  DirectXTutorial.vcxproj -> C:\Users\Ruedi\Documents\Visual Studio 2015\Projects\C++ Learning\DirectXTutorial\Debug\DirectXTutorial.exe
