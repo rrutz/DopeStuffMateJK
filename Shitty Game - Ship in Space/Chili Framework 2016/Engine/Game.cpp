@@ -30,13 +30,14 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	rng(rd()),
 	xDist(0, 770),
-	yDist(0, 570)
+	yDist(0, 570),
+	xvDist(1, 2),
+	yvDist(1, 2)
 {
-	std::uniform_int_distribution<int> xvDist(-1, 1);
-	std::uniform_int_distribution<int> yvDist(-1, 1);
+	
 	for (int i = 0; i < nBadGuys; i++)
 	{
-		badGuys[i].Init( xDist( rng ), yDist( rng ), xvDist( rng ), yvDist( rng ) );
+		badGuys.push_back(BadGuy(xDist(rng), yDist(rng), xvDist(rng), yvDist(rng)));
 	}
 }
 
@@ -51,33 +52,57 @@ void Game::Go() // instance of frame
 
 void Game::UpdateModel()
 {	
+	while (badGuys.size() < nBadGuys )
+	{
+		badGuys.push_back(BadGuy(xDist(rng), yDist(rng), xvDist(rng), yvDist(rng)));
+	}
 	ship.Move();
 	ship.Update(wnd.kbd);
 
-	for (int i = 0; i < nBadGuys; i++)
+	std::vector<int> indexToDelete;
+	for (int i = 0; i < nBadGuys; i++ )
 	{
 		badGuys[i].Update();
-		badGuys[i].Hit(ship.x, ship.y);
+		if (badGuys[i].Hit(ship.x, ship.y))
+		{
+			indexToDelete.push_back(i);
+		}
 	}
+
+	for (int i : indexToDelete)
+	{
+		badGuys.erase(badGuys.begin() + i);
+	}
+
 
 	if (wnd.kbd.KeyIsPressed(VK_SPACE))
 	{
-		//bullet = ship.Shoot();
+		bullets.push_back(Bullet(ship.x, ship.y, ship.vx, ship.vy));
 	} 
+
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets[i].Move();
+	}
+
 }
 
 void Game::ComposeFrame()
 {
 	
 	gfx.ShipImage(ship.x, ship.y, r, g, b, ship.vy, ship.vx);
-	//bullet.Move();
-	//gfx.PutPixel(bullet.x, bullet.y, 100, 100, 100);
 
-	for (int i = 0; i < nBadGuys; i++)
+	for ( BadGuy badGuy : badGuys )
 	{
-		if (!badGuys[i].isKilled() )
+		badGuy.draw(gfx);
+	}
+
+	for (Bullet bullet : bullets)
+	{
+		if (bullet.exists)
 		{
-			badGuys[i].draw(gfx);
+			bullet.draw(gfx);
 		}
+		
 	}
 }

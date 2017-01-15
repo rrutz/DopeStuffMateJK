@@ -26,6 +26,7 @@
 #include "BadGuy.h"
 #include "Ship.h"
 #include <random>
+#include "Bullet.h"
 
 class Game
 {
@@ -50,8 +51,10 @@ private:
 	/*  User Variables              */
 	std::random_device rd;
 	std::mt19937 rng;
-	std::uniform_int_distribution<int> xDist;
-	std::uniform_int_distribution<int> yDist;
+	std::uniform_real_distribution<float> xDist;
+	std::uniform_real_distribution<float> yDist;
+	std::uniform_real_distribution<float> xvDist;
+	std::uniform_real_distribution<float> yvDist;
 
 	Ship ship;
 
@@ -59,7 +62,9 @@ private:
 	int g = 100;
 	int b = 100;
 
-	static constexpr int nBadGuys = 1000;
-	BadGuy badGuys[nBadGuys];
+	static constexpr int nBadGuys = 5;
+	std::vector<BadGuy> badGuys;
+
+	std::vector<Bullet> bullets;
 	/********************************/
 };

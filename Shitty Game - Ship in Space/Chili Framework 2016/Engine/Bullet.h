@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Graphics.h"
+
 class Bullet {
 
 public:
@@ -8,6 +11,8 @@ public:
 	bool exists = true;
 	int vx;
 	int vy;
+	int bulletSize = 4;
 
 	void Move();
+	void draw(Graphics& gfx);
 };

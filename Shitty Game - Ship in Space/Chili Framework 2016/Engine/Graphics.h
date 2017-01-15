@@ -52,7 +52,7 @@ public:
 	void EndFrame();
 	void BeginFrame();
 	void ShipImage(int x, int y, int r, int b, int g, int opp, int adj);
-	void PaintDanger(int x, int y, int r, int b, int g);
+	void PaintDanger(int x, int y, int r, int b, int g, int cubeSize);
 	void PutPixel( int x,int y,int r,int g,int b )
 	{
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );

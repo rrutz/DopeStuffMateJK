@@ -5,14 +5,16 @@
 class BadGuy
 {
 public:
-	void Init(int x_in, int y_in, int vx_in, int vy_in );
+	BadGuy(int x_in, int y_in, float vx_in, float vy_in );
 	void Update();
-	void Hit(int shipx, int shipy);
+	bool Hit(int shipx, int shipy);
 	int x; 
 	int y;
-	int vx; 
-	int vy;
+	float vx;
+	float vy;
 	bool killed = false;
 	void draw(Graphics& gfx );
 	bool isKilled();
+
+	int cubeSize = 20;
 };

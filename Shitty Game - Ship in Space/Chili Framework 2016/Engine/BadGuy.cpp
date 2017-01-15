@@ -3,7 +3,7 @@
 
 // random starting points and speeds
 
-void BadGuy::Init(int x_in, int y_in, int vx_in, int vy_in)
+BadGuy::BadGuy(int x_in, int y_in, float vx_in, float vy_in)
 {
 	x = x_in;
 	y = y_in;
@@ -21,10 +21,10 @@ void BadGuy::Update()
 		vx = -vx;
 		x = 0;
 	}
-	else if (x + 9 >= Graphics::ScreenWidth)
+	else if (x + cubeSize+1 >= Graphics::ScreenWidth)
 	{
 		vx = -vx;
-		x = Graphics::ScreenWidth - 9;
+		x = Graphics::ScreenWidth - cubeSize-1;
 	}
 
 	if (y  < 0)
@@ -32,26 +32,27 @@ void BadGuy::Update()
 		vy = -vy;
 		y = 0;
 	}
-	else if (y + 9 >= Graphics::ScreenHeight)
+	else if (y + cubeSize+1  >= Graphics::ScreenHeight)
 	{
 		vy = -vy;
-		y = Graphics::ScreenHeight - 9;
+		y = Graphics::ScreenHeight - cubeSize-1;
 	}
 }
 	
-void BadGuy::Hit(int shipx, int shipy)
+bool BadGuy::Hit(int shipx, int shipy)
 {
-	if ( (shipx <= x +8 && shipx >= x) && 
-		(shipy >= y && shipy <= y+8 ))
+	if ( (shipx <= x + cubeSize && shipx >= x) &&
+		(shipy >= y && shipy <= y+ cubeSize))
 	{
 		killed = true;
 	}
+	return killed;
 
 }
 
 void BadGuy::draw(Graphics& gfx)
 {
-	gfx.PaintDanger(x, y, 0, 100, 0);
+	gfx.PaintDanger(x, y, 0, 100, 0, cubeSize);
 }
 
 bool BadGuy::isKilled()

@@ -352,11 +352,11 @@ void Graphics::ShipImage(int x, int y, int r, int b, int g, int opp, int adj)
 	}
 }
 
-void Graphics::PaintDanger(int x, int y, int r, int b, int g)
+void Graphics::PaintDanger(int x, int y, int r, int b, int g, int cubeSize)
 {
-	for (int i = 0; i <= 4 * 2; i++)
+	for (int i = 0; i <= cubeSize; i++)
 	{
-		for (int j = 0; j <= 4 * 2; j++)
+		for (int j = 0; j <= cubeSize; j++)
 		{
 			PutPixel(x + i, y + j, r, b, g);
 		}
